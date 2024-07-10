@@ -59,5 +59,9 @@ public class UIManager : MonoBehaviour
         }
     }
 
-
+    void AtualizarTextos(int pontuacao, float relogio)
+    {
+        textoDePontuacao.text = pontuacao.ToString();
+        textoDoRelogio.text = relogio.ToString();
+    }
 }
