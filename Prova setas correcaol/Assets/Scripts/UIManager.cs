@@ -47,7 +47,17 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    
+    void AtualizarSeta(int setaSelecionada, bool acertou)
+    {
+        if (acertou)
+        {
+            imagens[setaSelecionada].color = Color.green;
+        }
+        else
+        {
+            imagens[setaSelecionada].color = Color.red;
+        }
+    }
 
 
 }
