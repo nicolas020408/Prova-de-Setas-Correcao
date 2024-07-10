@@ -4,15 +4,86 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    int pontos, teclaAtual;
+    float relogio;
+    KeyCode[] teclas;
+
+    private void Start()
     {
-        
+        GerarSetas();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            ChecarTecla(KeyCode.DownArrow);
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            ChecarTecla(KeyCode.LeftArrow);
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            ChecarTecla(KeyCode.UpArrow);
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            ChecarTecla(KeyCode.RightArrow);
+        }
+
+        ContagemRegressiva();
     }
+
+    void ContagemRegressiva()
+    {
+        relogio -= Time.deltaTime;
+
+        //UIManager.instace.AtualizarTextos(pontos, relogio);
+
+        if(relogio <= 0)
+        {
+            pontos -= teclas.Length - teclaAtual;
+            GerarSetas();
+        }
+    }
+
+    void GerarSetas()
+    {
+        teclaAtual = 0;
+        teclas = new KeyCode[Random.Range(5,15)];
+
+        for(int i = 0; i < teclas.Length; i++)
+        {
+            teclas[i] = (KeyCode)Random.Range(273, 276);
+        }
+
+        relogio = teclas.Length / 2;
+        //UIManager.instance.AtualizarSetas(teclas);
+    }
+
+    void ChecarTecla(KeyCode teclaPressionada)
+    {
+        if (teclaPressionada == teclas[teclaAtual])
+        {
+            pontos++;
+            //UIManager.instace.AtualizarSeta(teclaAtual, true);
+        }
+        else 
+        {
+            pontos--;
+            relogio--;
+            //UIManager.instace.AtualizarSeta(teclaAtual, false);
+        }
+
+        //UIManager.instace.AtualizarTextos(pontos, relogio);
+
+        teclaAtual++;
+        if(teclaAtual == teclas.Length)
+        {
+            GerarSetas();
+        }
+    }
+
+
 }
