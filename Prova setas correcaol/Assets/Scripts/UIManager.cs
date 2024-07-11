@@ -18,7 +18,7 @@ public class UIManager : MonoBehaviour
         instance = this;
     }
 
-    void AtualizarSetas(KeyCode[] setas)
+    public void AtualizarSetas(KeyCode[] setas)
     {
         for (int i = 0; i < imagens.Length; i++)
         {
@@ -47,7 +47,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    void AtualizarSeta(int setaSelecionada, bool acertou)
+    public void AtualizarSeta(int setaSelecionada, bool acertou)
     {
         if (acertou)
         {
@@ -59,7 +59,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    void AtualizarTextos(int pontuacao, float relogio)
+    public void AtualizarTextos(int pontuacao, float relogio)
     {
         textoDePontuacao.text = pontuacao.ToString();
         textoDoRelogio.text = relogio.ToString();

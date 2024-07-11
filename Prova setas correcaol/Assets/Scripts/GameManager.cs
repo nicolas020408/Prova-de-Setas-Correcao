@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     {
         relogio -= Time.deltaTime;
 
-        //UIManager.instace.AtualizarTextos(pontos, relogio);
+        UIManager.instance.AtualizarTextos(pontos, relogio);
 
         if(relogio <= 0)
         {
@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
         }
 
         relogio = teclas.Length / 2;
-        //UIManager.instance.AtualizarSetas(teclas);
+        UIManager.instance.AtualizarSetas(teclas);
     }
 
     void ChecarTecla(KeyCode teclaPressionada)
@@ -67,16 +67,16 @@ public class GameManager : MonoBehaviour
         if (teclaPressionada == teclas[teclaAtual])
         {
             pontos++;
-            //UIManager.instace.AtualizarSeta(teclaAtual, true);
+            UIManager.instance.AtualizarSeta(teclaAtual, true);
         }
         else 
         {
             pontos--;
             relogio--;
-            //UIManager.instace.AtualizarSeta(teclaAtual, false);
+            UIManager.instance.AtualizarSeta(teclaAtual, false);
         }
 
-        //UIManager.instace.AtualizarTextos(pontos, relogio);
+        UIManager.instance.AtualizarTextos(pontos, relogio);
 
         teclaAtual++;
         if(teclaAtual == teclas.Length)
