@@ -4,9 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour //
+public class UIManager : MonoBehaviour
 {
-    public static UIManager instance;
+    public static UIManager Instance;
 
     [SerializeField] Sprite[] sprites;
     [SerializeField] Image[] imagens;
@@ -15,7 +15,27 @@ public class UIManager : MonoBehaviour //
 
     private void Awake()
     {
-        instance = this;
+        // Singleton
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject); // Destrói o novo objeto se já existir uma instância
+        }
+    }
+
+    // Método com retorno: retorna o texto da pontuação
+    public string GetTextoPontuacao()
+    {
+        return textoDePontuacao.text;
+    }
+
+    // Método com retorno: retorna o texto do relógio
+    public string GetTextoRelogio()
+    {
+        return textoDoRelogio.text;
     }
 
     public void AtualizarSetas(KeyCode[] setas)
@@ -24,7 +44,7 @@ public class UIManager : MonoBehaviour //
         {
             if (i >= setas.Length)
             {
-                imagens[i].sprite = sprites[0];
+                imagens[i].sprite = sprites[0]; // No seta
             }
             else if (setas[i] == KeyCode.DownArrow)
             {
@@ -59,9 +79,17 @@ public class UIManager : MonoBehaviour //
         }
     }
 
+    // Atualiza a UI com a pontuação e o tempo
     public void AtualizarTextos(int pontuacao, float relogio)
     {
         textoDePontuacao.text = pontuacao.ToString();
         textoDoRelogio.text = relogio.ToString();
     }
+
+    // Método que retorna o número de setas na tela
+    public int GetQuantidadeSetas()
+    {
+        return imagens.Length;
+    }
 }
+

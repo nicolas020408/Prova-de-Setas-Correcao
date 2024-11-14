@@ -4,9 +4,29 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    private static GameManager _instance;
+
     int pontos, teclaAtual;
     float relogio;
     KeyCode[] teclas;
+
+    // Singleton
+    public static GameManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<GameManager>();
+                if (_instance == null)
+                {
+                    GameObject obj = new GameObject("GameManager");
+                    _instance = obj.AddComponent<GameManager>();
+                }
+            }
+            return _instance;
+        }
+    }
 
     private void Start()
     {
@@ -35,13 +55,26 @@ public class GameManager : MonoBehaviour
         ContagemRegressiva();
     }
 
+    // Método com retorno para obter os pontos
+    public int GetPontos()
+    {
+        return pontos;
+    }
+
+    // Método com retorno para obter o tempo restante
+    public float GetRelogio()
+    {
+        return relogio;
+    }
+
     void ContagemRegressiva()
     {
         relogio -= Time.deltaTime;
 
-        UIManager.instance.AtualizarTextos(pontos, relogio);
+        // Atualiza os textos na UI através do Singleton da UIManager
+        UIManager.Instance.AtualizarTextos(pontos, relogio);
 
-        if(relogio <= 0)
+        if (relogio <= 0)
         {
             pontos -= teclas.Length - teclaAtual;
             GerarSetas();
@@ -51,15 +84,15 @@ public class GameManager : MonoBehaviour
     void GerarSetas()
     {
         teclaAtual = 0;
-        teclas = new KeyCode[Random.Range(5,15)];
+        teclas = new KeyCode[Random.Range(5, 15)];
 
-        for(int i = 0; i < teclas.Length; i++)
+        for (int i = 0; i < teclas.Length; i++)
         {
-            teclas[i] = (KeyCode)Random.Range(273, 276);
+            teclas[i] = (KeyCode)Random.Range(273, 276); // Gera teclas aleatórias de seta
         }
 
         relogio = teclas.Length / 2;
-        UIManager.instance.AtualizarSetas(teclas);
+        UIManager.Instance.AtualizarSetas(teclas);
     }
 
     void ChecarTecla(KeyCode teclaPressionada)
@@ -67,23 +100,22 @@ public class GameManager : MonoBehaviour
         if (teclaPressionada == teclas[teclaAtual])
         {
             pontos++;
-            UIManager.instance.AtualizarSeta(teclaAtual, true);
+            UIManager.Instance.AtualizarSeta(teclaAtual, true);
         }
-        else 
+        else
         {
             pontos--;
             relogio--;
-            UIManager.instance.AtualizarSeta(teclaAtual, false);
+            UIManager.Instance.AtualizarSeta(teclaAtual, false);
         }
 
-        UIManager.instance.AtualizarTextos(pontos, relogio);
+        UIManager.Instance.AtualizarTextos(pontos, relogio);
 
         teclaAtual++;
-        if(teclaAtual == teclas.Length)
+        if (teclaAtual == teclas.Length)
         {
             GerarSetas();
         }
     }
-
-
 }
+
