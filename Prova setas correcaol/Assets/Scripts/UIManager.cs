@@ -75,7 +75,7 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            imagens[setaSelecionada].color = Color.red;
+            imagens[setaSelecionada].color = Color.blue;
         }
     }
 
